@@ -67,8 +67,6 @@
     [super viewDidLoad];
     _defaultImage= [UIImage alloc];
     _defaultImage =[UIImage imageNamed:@"tree.png"];
- 
-  //  NSLog(@"-defaultImage %@",_defaultImage);
     [self createTable];
     
     
@@ -289,9 +287,6 @@
 {
     UITapGestureRecognizer *gesture = (UITapGestureRecognizer *) sender;
     NSString *photoUrl=[[_dictionaryWithArrayofPhoto objectForKey:[NSString stringWithFormat:@"PhotoInSection%iInRow%i",gesture.view.tag/10,gesture.view.tag%10]]objectForKey:@"src_big"];
-  //  NSLog(@"PhotoInSection%iInRow%i",gesture.view.tag/10,gesture.view.tag%10);
- //   NSLog(@"gsture tar: 10 - %i",gesture.view.tag);
- //   NSLog(@"Tag = %@", photoUrl);
     NSData *photoData = [NSData dataWithContentsOfURL:[NSURL URLWithString:photoUrl]];
     if (_needCache) 
     {

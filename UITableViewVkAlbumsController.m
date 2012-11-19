@@ -99,11 +99,7 @@
 
 - (void)vkontakteDidFinishGettinUserAlbumsCount:(NSDictionary *)info;
 {
-    
-    // [mutableDicti setObject:objectInstance forKey:[NSString stringWithFormat:@"Album%i",number++]];
     _dictionaryOfAlbums = info;
-    
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -182,16 +178,14 @@
 
 - (void)vkontakteDidFinishLogin:(Vkontakte *)vkontakte
 {
-    
     [self dismissModalViewControllerAnimated:YES];
     [_vkontakte getUserAlbumsCount];
     [[self tableView]reloadData];
-    //[self refreshButtonState];
 }
 
 - (void)vkontakteDidFinishLogOut:(Vkontakte *)vkontakte
 {
-    //[self refreshButtonState];
+    
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

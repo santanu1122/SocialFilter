@@ -363,9 +363,6 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
 	[requestString appendFormat:@"%@/", @"https://api.vk.com/method"];
     [requestString appendFormat:@"%@?", @"photos.getAll"];
     [requestString appendFormat:@"uid=%@&", userId];
-   // NSMutableString *fields = [[NSMutableString alloc] init];
-   // [fields appendString:@"sex,bdate,photo,photo_big"];
-    //[requestString appendFormat:@"fields=%@&", fields];
     [requestString appendFormat:@"access_token=%@", accessToken];
     NSLog(@"requestString getUserAlbums %@",requestString);
 	NSURL *url = [NSURL URLWithString:requestString];
@@ -374,9 +371,6 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
 	NSData *response = [NSURLConnection sendSynchronousRequest:request 
 											 returningResponse:nil 
 														 error:nil];
-	//NSString *responseString = [[NSString alloc] initWithData:response 
-   //                                                  encoding:NSUTF8StringEncoding];
-	//NSLog(@"%@",responseString);
     
     NSError* error;
     NSDictionary* parsedDictionary2 = [NSJSONSerialization 
@@ -388,22 +382,14 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
 
     if ([parsedDictionary2 objectForKey:@"response"]) 
     {
-        NSMutableDictionary *mutableDicti=[[NSMutableDictionary alloc]initWithDictionary:parsedDictionary2];
-        //parsedDictionary2 = [NSMutableDictionary dictionaryWithDictionary:parsedDictionary2];
-        
+        NSMutableDictionary *mutableDicti=[[NSMutableDictionary alloc]initWithDictionary:parsedDictionary2];        
 
         id objectInstance;
         int number=1;
         
         for (objectInstance in array)
             [mutableDicti setObject:objectInstance forKey:[NSString stringWithFormat:@"photo%i",number++]];
-        
-        
-        
-        //parsedDictionary2 = [array objectAtIndex:1,[array count]];
-       // NSLog(@"parsed dictionary2");
-
-        //[parsedDictionary setValue:email forKey:@"email"];
+       
         
         if ([self.delegate respondsToSelector:@selector(vkontakteDidFinishGettinUserInfo:)])
         {
@@ -450,24 +436,20 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
 	NSData *response = [NSURLConnection sendSynchronousRequest:request 
 											 returningResponse:nil 
 														 error:nil];
-	//NSString *responseString = [[NSString alloc] initWithData:response 
-  //                                                   encoding:NSUTF8StringEncoding];
-//	NSLog(@" responseString %@",responseString);
+	
     
     NSError* error;
     NSDictionary* parsedDictionary = [NSJSONSerialization 
                                        JSONObjectWithData:response
                                        options:kNilOptions 
                                        error:&error];
-  //  NSLog(@"getCountAlbumsinCode%@",parsedDictionary);
 
     
     NSArray *array = [parsedDictionary objectForKey:@"response"];
     
     if ([parsedDictionary objectForKey:@"response"]) 
     {
-       // NSMutableDictionary *mutableDicti=[[NSMutableDictionary alloc]initWithDictionary:parsedDictionary];
-        //parsedDictionary2 = [NSMutableDictionary dictionaryWithDictionary:parsedDictionary2];
+      
         NSMutableDictionary *mutableDicti=[[NSMutableDictionary alloc]init];
         int number=1;
         
@@ -481,13 +463,11 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
         
         
         
-        //parsedDictionary2 = [array objectAtIndex:1,[array count]];
-     //   NSLog(@"getCountAlbums%@", mutableDicti);
+       
         
         
         if ([self.delegate respondsToSelector:@selector(vkontakteDidFinishGettinUserAlbumsCount:)])
         {
-            //[self getUserInfo];
             [self.delegate vkontakteDidFinishGettinUserAlbumsCount:mutableDicti];
         }
     }
@@ -527,50 +507,39 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
 	NSData *response = [NSURLConnection sendSynchronousRequest:request 
 											 returningResponse:nil 
 														 error:nil];
-//	NSString *responseString = [[NSString alloc] initWithData:response 
-   //                                                  encoding:NSUTF8StringEncoding];
-//	NSLog(@" responseString %@",responseString);
+
     
     NSError* error;
     NSDictionary* parsedDictionary = [NSJSONSerialization 
                                       JSONObjectWithData:response
                                       options:kNilOptions 
                                       error:&error];
-  //  NSLog(@"getCountAlbumsinCode%@",parsedDictionary);
     
     
     NSArray *array = [parsedDictionary objectForKey:@"response"];
     
     if ([parsedDictionary objectForKey:@"response"]) 
     {
-        //parsedDictionary2 = [NSMutableDictionary dictionaryWithDictionary:parsedDictionary2];
         NSMutableDictionary *mutableDicti=[[NSMutableDictionary alloc]init];
         
         int numberRow=1;
         int numberSection=0;
         int index=0;
 
-       /* for (id objectInstance in array)
-            [mutableDicti setObject:objectInstance forKey:[NSString stringWithFormat:@"Album%i",number++]];*/
-        //([array count]/4) != [mutableDicti count]
         while ([mutableDicti count]<([array count])) {
             [mutableDicti setObject:[array objectAtIndex:index++] forKey:[NSString stringWithFormat:@"PhotoInSection%iInRow%i",numberSection, numberRow++]];
             if ((numberRow%5)==0) {
                 numberSection++;
                 numberRow=1;
             }
-        //    NSLog(@"numver row %i , number Section %i",numberRow,numberSection);
-         //   NSLog(@"numberRow %i",(numberRow%4));
-         //   NSLog(@"%i/%i",[mutableDicti count],([array count]));
+   
         }
         
         
-        //parsedDictionary2 = [array objectAtIndex:1,[array count]];
-       // NSLog(@"getUserAlbumsPhoto%@", mutableDicti);
+       
         
         if ([self.delegate respondsToSelector:@selector(vkontakteDidFinishGettinAlbumsPhoto:)])
         {
-            //[self getUserInfo];
             [self.delegate vkontakteDidFinishGettinAlbumsPhoto:mutableDicti];
         }
     }
@@ -621,9 +590,6 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
         NSData *response = [NSURLConnection sendSynchronousRequest:request 
                                                  returningResponse:nil 
                                                              error:nil];
-        //	NSString *responseString = [[NSString alloc] initWithData:response 
-        //                                                  encoding:NSUTF8StringEncoding];
-        //	NSLog(@" responseString %@",responseString);
         
         NSError* error;
         NSDictionary* parsedDictionary = [NSJSONSerialization 
@@ -651,7 +617,6 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
     {
        for (NSString*key in finalDictionary)
        {
-           //[object setObject:[object lastObject] forKey:<#(id)#>
            NSArray * lolarray = [finalDictionary objectForKey:key];
            
            id currentObject = [lolarray lastObject];
@@ -729,7 +694,6 @@ NSString * const vkRedirectUrl = @"http://oauth.vk.com/blank.html";
                           error:&error];
     
     NSArray *array = [parsedDictionary objectForKey:@"response"];
-   // NSLog(@"ARRAY %@",array);
     if ([parsedDictionary objectForKey:@"response"]) 
     {
         parsedDictionary = [array objectAtIndex:0];
